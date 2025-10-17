@@ -1,18 +1,17 @@
-/* --- Google Font Import (Optional but Recommended Fallback) --- */
+/* --- Google Font Import (Fallback for Century Gothic) --- */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-/* --- Root Variables (Apple-inspired Theme) --- */
+/* --- Root Variables (Apple Pro Dark Theme) --- */
 :root {
-    --bg: #ffffff;
-    --surface: #f5f5f7; /* Apple's light gray for surfaces */
-    --text-primary: #1d1d1f; /* Apple's primary near-black */
-    --text-secondary: #6e6e73; /* Apple's secondary gray */
-    --accent: #0071e3; /* Apple's signature blue */
-    --border-color: #d2d2d7;
-    --radius-lg: 20px;
-    --radius-sm: 16px;
-    /* Darker, more saturated glass for the header */
-    --glass-bg: rgba(255, 255, 255, 0.7);
+    --bg: #000000; /* True black background */
+    --surface: #1d1d1f; /* Apple's dark charcoal for cards */
+    --text-primary: #f5f5f7; /* Off-white for primary text to reduce harshness */
+    --text-secondary: #86868b; /* Apple's medium gray for secondary text */
+    --accent: #0a84ff; /* A brighter, more vibrant blue for dark mode */
+    --border-color: #3a3a3c; /* Subtle border for definition */
+    --radius-lg: 22px; /* Slightly larger radius for a softer feel */
+    --radius-sm: 18px;
+    --glass-bg: rgba(29, 29, 31, 0.7); /* Dark, translucent glass */
 }
 
 /* --- Base & Reset --- */
@@ -22,12 +21,11 @@
     padding: 0;
 }
 
-html, body {
-    height: 100%;
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-    /* Use Century Gothic, with Poppins and system fonts as excellent fallbacks */
     font-family: "Century Gothic", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--bg);
     color: var(--text-primary);
@@ -39,41 +37,36 @@ body {
 
 /* --- Layout Container --- */
 .main {
-    max-width: 1100px; /* Wider for a more spacious, premium feel */
+    max-width: 1100px;
     margin: 48px auto;
     background: transparent;
 }
 
-/* --- Header (Glassmorphism & Sticky) --- */
+/* --- Header (Dark Glassmorphism & Sticky) --- */
 header {
     position: sticky;
-    top: 16px; /* Stick with a small gap from the top */
+    top: 16px;
     z-index: 100;
-    
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
     max-width: 1100px;
     margin: 0 auto 32px auto;
     padding: 12px 24px;
     
-    /* The Apple Glass/Material Effect */
+    /* The Apple Dark Glass Effect */
     background: var(--glass-bg);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Light border to catch the light */
     border-radius: var(--radius-sm);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 header h1 {
     font-size: 20px;
     font-weight: 600;
     letter-spacing: -0.5px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
 }
 
 header nav a {
@@ -87,7 +80,7 @@ header nav a {
 }
 
 header nav a:hover {
-    background: rgba(0,0,0,0.05);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 /* --- Dashboard Header (Visually Striking Hero) --- */
@@ -98,22 +91,28 @@ header nav a:hover {
 }
 
 .dashboard-header h2 {
-    font-size: 56px;
+    font-size: 64px;
     font-weight: 700;
-    letter-spacing: -2px; /* Tighter letter-spacing for large headlines */
+    letter-spacing: -2.5px;
     margin-bottom: 16px;
-    color: var(--text-primary);
+    
+    /* ** Pro Tip: Gradient Text for a Premium Look ** */
+    background: linear-gradient(180deg, #ffffff, #d2d2d7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
 }
 
 .dashboard-header p {
     color: var(--text-secondary);
     margin: 0 auto;
-    font-size: 20px;
+    font-size: 21px;
     max-width: 680px;
     line-height: 1.5;
 }
 
-/* --- Stats & Events Grids --- */
+/* --- Grids --- */
 .stats, .events-grid {
     display: grid;
     gap: 24px;
@@ -127,19 +126,19 @@ header nav a:hover {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-/* --- Card Style (Subtle & Clean) --- */
+/* --- Card Style (Subtle & Illuminated) --- */
 .card, .event-card {
     background: var(--surface);
     border-radius: var(--radius-lg);
-    padding: 28px;
+    padding: 32px;
     border: 1px solid var(--border-color);
-    box-shadow: none; /* Removed shadow for a flatter, modern look */
-    transition: transform 0.25s ease-in-out, border-color 0.25s ease-in-out;
+    box-shadow: none;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .card:hover, .event-card:hover {
-    transform: scale(1.03); /* Scale up instead of lifting */
-    border-color: var(--accent);
+    transform: scale(1.03) translateY(-5px);
+    background-color: #2c2c2e; /* Slightly lighten on hover */
 }
 
 .card h3 {
@@ -152,7 +151,7 @@ header nav a:hover {
 .card p {
     margin: 0;
     color: var(--text-primary);
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 700;
 }
 
@@ -169,9 +168,9 @@ header nav a:hover {
 }
 
 .event-date {
-    color: var(--text-secondary);
+    color: var(--accent); /* Use accent color for dates to make them pop */
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .event-desc {
@@ -184,10 +183,10 @@ header nav a:hover {
 a.join-btn {
     display: inline-block;
     text-decoration: none;
-    color: white;
+    color: #fff;
     background-color: var(--accent);
-    padding: 12px 24px;
-    border-radius: 9999px; /* Pill shape */
+    padding: 14px 28px;
+    border-radius: 9999px;
     font-weight: 600;
     font-size: 16px;
     align-self: flex-start;
@@ -197,7 +196,7 @@ a.join-btn {
 
 a.join-btn:hover {
     transform: scale(1.05);
-    filter: brightness(1.1);
+    filter: brightness(1.15);
 }
 
 /* --- Footer --- */
@@ -213,9 +212,9 @@ footer {
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
-    .dashboard-header h2 { font-size: 40px; letter-spacing: -1px; }
+    .dashboard-header h2 { font-size: 48px; letter-spacing: -1.5px; }
     .dashboard-header p { font-size: 18px; }
-    header { top: 8px; margin-left: 8px; margin-right: 8px; max-width: none; }
+    header { top: 8px; margin: 0 8px 32px 8px; max-width: none; }
 }
 
 @media (max-width: 560px) {
