@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attendance Scanner - College Event Manager</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>📷 Attendance Scanner</h1>
+</header>
+
+<div class="main">
+    <div class="scanner-container" style="text-align:center; margin-top:50px;">
+        <video id="preview" width="400" height="300" style="border:2px solid #0055cc;"></video>
+        <p id="scanResult" style="margin-top:20px; font-size:18px;"></p>
+    </div>
+</div>
+
+<footer>© 2025 College Event Manager</footer>
+
+<script type="module">
+import { Html5Qrcode } from "https://unpkg.com/html5-qrcode@2.3.9/minified/html5-qrcode.min.js";
+import { db } from "../js/firebase-config.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js";
+
+const html5QrCode = new Html5Qrcode("preview");
+
+function onScanSuccess(decodedText, decodedResult) {
+    document.getElementById("scanResult").innerText = QR Scanned: ${decodedText};
+    
+    // Save attendance to Firestore
+    const attendanceRef = doc(db, "attendance", decodedText);
+    setDoc(attendanceRef, {
+        scannedAt: new Date(),
+        eventId: decodedText.split("_")[1],
+        participantId: decodedText.split("_")[0]
+    }).then(() => {
+        console.log("Attendance saved!");
+    }).catch(console.error);
+
+    html5QrCode.stop();
+}
+
+html5QrCode.start(
+    { facingMode: "environment" }, 
+    { fps: 10, qrbox: 250 }, 
+    onScanSuccess
+).catch(console.error);
+</script>
+
+</body>
+</html>

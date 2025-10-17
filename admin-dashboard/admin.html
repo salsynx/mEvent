@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - College Event Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>College Event Manager</h1>
+    <nav>
+        <a href="#">Dashboard</a>
+        <a href="#">Events</a>
+        <a href="#">Logout</a>
+    </nav>
+</header>
+
+<div class="sidebar">
+    <a href="#">📊 Dashboard</a>
+    <a href="#">📅 Events</a>
+    <a href="#">👥 Users</a>
+    <a href="#">🎓 Certificates</a>
+    <a href="#">📑 Reports</a>
+    <a href="#">⚙ Settings</a>
+</div>
+
+<div class="main">
+    <div class="dashboard-title">Admin Dashboard</div>
+
+    <div class="stats">
+        <div class="card">
+            <h3>Events</h3>
+            <p id="total-events">0</p>
+        </div>
+        <div class="card">
+            <h3>Users</h3>
+            <p id="total-users">0</p>
+        </div>
+        <div class="card">
+            <h3>Certificates</h3>
+            <p id="total-certificates">0</p>
+        </div>
+        <div class="card">
+            <h3>Feedbacks</h3>
+            <p id="total-feedbacks">0</p>
+        </div>
+    </div>
+
+    <div class="chart-placeholder">[Charts Placeholder]</div>
+
+    <h2 style="margin:30px 0 15px 0; color:#222;">Recent Events</h2>
+    <table id="recent-events-table">
+        <tr>
+            <th>Event</th>
+            <th>Registrations</th>
+            <th>Date</th>
+        </tr>
+        <tr>
+            <td>TechFest 2025</td>
+            <td>150</td>
+            <td>15 Mar</td>
+        </tr>
+        <tr>
+            <td>Guest Lecture</td>
+            <td>90</td>
+            <td>20 Mar</td>
+        </tr>
+        <tr>
+            <td>Hackathon</td>
+            <td>200</td>
+            <td>25 Mar</td>
+        </tr>
+    </table>
+</div>
+
+<footer>
+    © 2025 College Event Manager | Privacy | Terms
+</footer>
+
+<script type="module">
+import { getAdminStats } from '../js/admin.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+    getAdminStats();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create/Edit Event - College Event Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>🎓 College Event Manager</h1>
+    <div class="user" id="logoutBtn">Organizer ▾</div>
+</header>
+
+<div class="sidebar">
+    <a href="organizer.html">📊 Dashboard</a>
+    <a href="create-event.html">➕ Create Event</a>
+    <a href="#">📅 My Events</a>
+    <a href="../settings/settings.html">⚙ Settings</a>
+</div>
+
+<div class="main">
+    <div class="wizard-card">
+        <div class="wizard-header">Create / Edit Event</div>
+        <div class="wizard-steps">
+            <div class="wizard-step active">1. Details</div>
+        </div>
+
+        <div class="form-group">
+            <label>Event Name</label>
+            <input type="text" id="eventName" placeholder="Enter event name">
+        </div>
+        <div class="form-group">
+            <label>Venue</label>
+            <input type="text" id="eventVenue" placeholder="Enter venue">
+        </div>
+        <div class="form-group">
+            <label>Date</label>
+            <input type="date" id="eventDate">
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea rows="4" id="eventDesc" placeholder="Write a short description"></textarea>
+        </div>
+
+        <div class="wizard-actions">
+            <button class="btn" id="saveEventBtn">Save Event</button>
+        </div>
+    </div>
+</div>
+
+<footer>© 2025 College Event Manager | Privacy | Terms</footer>
+
+<script type="module">
+import { auth, db } from "../js/firebase-config.js";
+import { logoutUser } from "../js/auth.js";
+import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js";
+
+document.getElementById("logoutBtn").addEventListener("click", logoutUser);
+
+const eventName = document.getElementById("eventName");
+const eventVenue = document.getElementById("eventVenue");
+const eventDate = document.getElementById("eventDate");
+const eventDesc = document.getElementById("eventDesc");
+const saveBtn = document.getElementById("saveEventBtn");
+
+let editEventId = localStorage.getItem("editEventId");
+
+// Load existing data if editing
+async function loadEventData() {
+    if(editEventId) {
+        const docRef = doc(db, "events", editEventId);
+        const docSnap = await getDoc(docRef);
+        if(docSnap.exists()) {
+            const data = docSnap.data();
+            eventName.value = data.name;
+            eventVenue.value = data.venue;
+            eventDate.value = data.date;
+            eventDesc.value = data.description;
+        }
+    }
+}
+
+saveBtn.addEventListener("click", async () => {
+    const user = auth.currentUser;
+    if(!user) return alert("User not logged in");
+
+    const data = {
+        name: eventName.value,
+        venue: eventVenue.value,
+        date: eventDate.value,
+        description: eventDesc.value,
+        organizerId: user.uid
+    };
+
+    if(editEventId) {
+        await setDoc(doc(db, "events", editEventId), data);
+        alert("Event updated!");
+        localStorage.removeItem("editEventId");
+    } else {
+        const newDoc = doc(db, "events", Date.now().toString());
+        await setDoc(newDoc, data);
+        alert("Event created!");
+    }
+
+    window.location.href = "organizer.html";
+});
+
+auth.onAuthStateChanged(user => {
+    if(user) loadEventData();
+    else window.location.href = "../login/login.html";
+});
+</script>
+
+</body>
+</html>

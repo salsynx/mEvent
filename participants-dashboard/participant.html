@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Participant Dashboard - College Event Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>🎓 College Event Manager</h1>
+    <div class="user" id="logoutBtn">Participant ▾</div>
+</header>
+
+<div class="sidebar">
+    <a href="participant.html">📊 Dashboard</a>
+    <a href="../events/events.html">📅 Events</a>
+    <a href="#">🎓 Certificates</a>
+    <a href="#">📝 Feedback</a>
+    <a href="../settings/settings.html">⚙ Settings</a>
+</div>
+
+<div class="main">
+    <div class="dashboard-header">
+        <h2>Participant Dashboard</h2>
+        <p>View your event registrations, download certificates, and provide feedback</p>
+    </div>
+
+    <h3>My Event Registrations</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Event Name</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Certificate</th>
+                <th>Feedback</th>
+            </tr>
+        </thead>
+        <tbody id="registrationList">
+            <!-- Registrations will load here -->
+        </tbody>
+    </table>
+</div>
+
+<footer>© 2025 College Event Manager | Privacy | Terms</footer>
+
+<script type="module">
+import { auth, db } from "../js/firebase-config.js";
+import { logoutUser } from "../js/auth.js";
+import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js";
+
+document.getElementById("logoutBtn").addEventListener("click", logoutUser);
+
+async function loadRegistrations() {
+    const user = auth.currentUser;
+    if(!user) return;
+
+    const tbody = document.getElementById("registrationList");
+    tbody.innerHTML = "Loading...";
+
+    const regQuery = query(collection(db, "registrations"), where("participantId", "==", user.uid));
+    const snapshot = await getDocs(regQuery);
+
+    tbody.innerHTML = "";
+    snapshot.forEach(doc => {
+        const data = doc.data();
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${data.eventName}</td>
+            <td>${data.date}</td>
+            <td>${data.status}</td>
+            <td><button class="btn-action" onclick="downloadCertificate('${doc.id}')">Download</button></td>
+            <td><button class="btn-action" onclick="giveFeedback('${doc.id}')">Give Feedback</button></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+window.downloadCertificate = (id) => {
+    // Will generate or download e-certificate
+    alert("Certificate download not implemented yet: " + id);
+};
+
+window.giveFeedback = (id) => {
+    alert("Feedback popup for registration: " + id);
+};
+
+auth.onAuthStateChanged(user => {
+    if(user) loadRegistrations();
+    else window.location.href = "../login/login.html";
+});
+</script>
+
+</body>
+</html>

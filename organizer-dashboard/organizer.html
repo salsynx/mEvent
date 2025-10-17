@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organizer Dashboard - College Event Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>🎓 College Event Manager</h1>
+    <div class="user" id="logoutBtn">Organizer ▾</div>
+</header>
+
+<div class="sidebar">
+    <a href="organizer.html">📊 Dashboard</a>
+    <a href="create-event.html">➕ Create Event</a>
+    <a href="#">📅 My Events</a>
+    <a href="../settings/settings.html">⚙ Settings</a>
+</div>
+
+<div class="main">
+    <div class="wizard-card">
+        <div class="wizard-header">Organizer Dashboard</div>
+        <div id="eventsList" class="events-grid">
+            <!-- Organizer events will load here -->
+        </div>
+    </div>
+</div>
+
+<footer>© 2025 College Event Manager | Privacy | Terms</footer>
+
+<script type="module">
+import { auth, db } from "../js/firebase-config.js";
+import { logoutUser } from "../js/auth.js";
+import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js";
+
+document.getElementById("logoutBtn").addEventListener("click", logoutUser);
+
+// Load organizer's events
+async function loadEvents() {
+    const user = auth.currentUser;
+    if(!user) {
+        window.location.href = "../login/login.html";
+        return;
+    }
+
+    const eventsList = document.getElementById("eventsList");
+    eventsList.innerHTML = "Loading...";
+
+    const eventsQuery = query(collection(db, "events"), where("organizerId", "==", user.uid));
+    const snapshot = await getDocs(eventsQuery);
+
+    eventsList.innerHTML = "";
+    snapshot.forEach(doc => {
+        const data = doc.data();
+        const card = document.createElement("div");
+        card.className = "event-card";
+        card.innerHTML = `
+            <div class="event-title">${data.name}</div>
+            <div class="event-date">📅 ${data.date}</div>
+            <div class="event-desc">${data.description}</div>
+            <button class="btn" onclick="editEvent('${doc.id}')">Edit</button>
+        `;
+        eventsList.appendChild(card);
+    });
+}
+
+window.editEvent = (id) => {
+    // Save eventId to localStorage and redirect to create-event page
+    localStorage.setItem("editEventId", id);
+    window.location.href = "create-event.html";
+};
+
+auth.onAuthStateChanged(user => {
+    if(user) loadEvents();
+    else window.location.href = "../login/login.html";
+});
+</script>
+
+</body>
+</html>

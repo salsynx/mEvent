@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings | College Event Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+/* Settings page specific styles */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #4b6cb7, #182848);
+    color: #fff;
+}
+
+.container {
+    width: 80%;
+    max-width: 1000px;
+    margin: 40px auto;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 40px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-size: 24px;
+    border-left: 5px solid #ffcc00;
+    padding-left: 10px;
+}
+
+.section {
+    margin-bottom: 40px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+input, select {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    font-size: 16px;
+}
+
+input:focus, select:focus {
+    box-shadow: 0 0 0 3px rgba(255,204,0,0.5);
+}
+
+.toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 12px 20px;
+    margin: 10px 0;
+}
+
+.toggle label {
+    font-weight: 600;
+}
+
+.toggle input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    accent-color: #ffcc00;
+    cursor: pointer;
+}
+
+button {
+    background: linear-gradient(135deg, #ff9800, #ff5722);
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+}
+</style>
+</head>
+<body>
+
+<header>Settings</header>
+
+<div class="container">
+    <div class="section">
+        <h2>Profile</h2>
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="John Doe">
+        </div>
+        <div class="form-group">
+            <label for="email">Email ID</label>
+            <input type="email" id="email" placeholder="john@example.com">
+        </div>
+        <div class="form-group">
+            <label for="role">Role</label>
+            <select id="role">
+                <option>Participant</option>
+                <option>Organizer</option>
+                <option>Admin</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Preferences</h2>
+        <div class="toggle">
+            <label>Dark Mode</label>
+            <input type="checkbox" checked>
+        </div>
+        <div class="toggle">
+            <label>Show Event Reminders</label>
+            <input type="checkbox">
+        </div>
+        <div class="toggle">
+            <label>Auto Register for Linked Events</label>
+            <input type="checkbox">
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Notifications</h2>
+        <div class="toggle">
+            <label>Email Alerts</label>
+            <input type="checkbox" checked>
+        </div>
+        <div class="toggle">
+            <label>SMS Notifications</label>
+            <input type="checkbox">
+        </div>
+        <div class="toggle">
+            <label>Push Notifications</label>
+            <input type="checkbox" checked>
+        </div>
+    </div>
+
+    <button id="saveSettingsBtn">Save Settings</button>
+</div>
+
+<footer>© 2025 College Event Manager | All Rights Reserved</footer>
+
+<script type="module">
+import { saveUserSettings, loadUserSettings } from '../js/settings.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadUserSettings();
+
+    document.getElementById('saveSettingsBtn').addEventListener('click', () => {
+        saveUserSettings();
+    });
+});
+</script>
+
+</body>
+</html>
