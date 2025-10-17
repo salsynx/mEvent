@@ -1,1 +1,83 @@
-hi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventX - College Event Manager</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>🎓 EventX</h1>
+        <nav>
+            <a href="events/events.html">Events</a>
+            <a href="calendar/calendar.html">Calendar</a>
+            <a href="login/login.html">Login</a>
+            <a href="register/register.html">Register</a>
+        </nav>
+    </header>
+
+    <!-- Main Section -->
+    <div class="main">
+        <div class="dashboard-header">
+            <h2>Welcome to EventX</h2>
+            <p>Manage, participate, and track all college events in one place.</p>
+        </div>
+
+        <!-- Quick Access Cards -->
+        <div class="stats">
+            <div class="card">
+                <h3>Events</h3>
+                <p><a href="events/events.html" style="color:#0055cc; text-decoration:none;">View All</a></p>
+            </div>
+            <div class="card">
+                <h3>Organizer Dashboard</h3>
+                <p><a href="organizer-dashboard/organizer.html" style="color:#0055cc; text-decoration:none;">Go</a></p>
+            </div>
+            <div class="card">
+                <h3>Participant Dashboard</h3>
+                <p><a href="participants-dashboard/participant.html" style="color:#0055cc; text-decoration:none;">Go</a></p>
+            </div>
+            <div class="card">
+                <h3>Admin Dashboard</h3>
+                <p><a href="admin-dashboard/admin.html" style="color:#0055cc; text-decoration:none;">Go</a></p>
+            </div>
+        </div>
+
+        <!-- Upcoming Events Preview -->
+        <h2 style="margin:30px 0 15px 0; color:#222;">Upcoming Events</h2>
+        <div class="events-grid">
+            <div class="event-card">
+                <div class="event-title">TechFest 2025</div>
+                <div class="event-date">📅 15 March 2025</div>
+                <div class="event-desc">Join the biggest inter-college tech festival featuring hackathons, robotics, and coding battles!</div>
+                <a href="events/events.html" class="join-btn">View Event</a>
+            </div>
+
+            <div class="event-card">
+                <div class="event-title">Guest Lecture: AI in Future</div>
+                <div class="event-date">📅 20 March 2025</div>
+                <div class="event-desc">Listen to top industry experts share insights about Artificial Intelligence and innovation in technology.</div>
+                <a href="events/events.html" class="join-btn">View Event</a>
+            </div>
+
+            <div class="event-card">
+                <div class="event-title">Hackathon 2025</div>
+                <div class="event-date">📅 25 March 2025</div>
+                <div class="event-desc">A 36-hour coding marathon to solve real-world problems and win exciting prizes!</div>
+                <a href="events/events.html" class="join-btn">View Event</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        © 2025 EventX | <a href="settings/settings.html">Settings</a> | Privacy | Terms
+    </footer>
+
+    <!-- Firebase + Custom JS -->
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/auth.js"></script>
+</body>
+</html>
